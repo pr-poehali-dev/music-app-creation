@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
+import { useFavorites } from '@/hooks/useFavorites';
 
 interface Track {
   id: number;
@@ -37,6 +39,8 @@ const mockArtists: Artist[] = [
 ];
 
 function Index() {
+  const navigate = useNavigate();
+  const { toggleFavorite, isFavorite } = useFavorites();
   const [currentTrack, setCurrentTrack] = useState<Track>(mockTracks[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -115,6 +119,7 @@ function Index() {
                     key={artist.id}
                     className="group cursor-pointer overflow-hidden border-muted hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
                     style={{ animationDelay: `${idx * 100}ms` }}
+                    onClick={() => navigate(`/artist/${artist.id}`)}
                   >
                     <div className="aspect-square bg-gradient-purple flex items-center justify-center text-6xl">
                       {artist.image}
